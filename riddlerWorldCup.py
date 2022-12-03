@@ -1,5 +1,5 @@
 from random import randint
-trials = 10000000
+trials = 1000000000
 busResult = 0
 lastUSResult = 0
 
