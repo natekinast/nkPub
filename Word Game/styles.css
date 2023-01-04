@@ -34,16 +34,14 @@ body {
 }
 
 input[type="text"] {
-  width: 3rem;
+  width: 15rem;
   height: 3rem;
   font-size: 32pt;
   text-transform: uppercase;
   letter-spacing: 4px;
   text-align: center;
   font-family: serif;
-
 }
-
 
 .letter {
   background-color: rgb(9, 83, 102);

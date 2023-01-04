@@ -3,23 +3,10 @@ import { WORDS } from "../../../Word Game/words.js"
 const letters = ["A", "A", "B", "C", "D", "E", "E", "F", "G", "H", "I", "I", "J", "K", "L", "M", "N", "O", "O", "P", "Q", "R", "S", "T", "U", "U", "V", "W", "X", "Y", "Z"];
 const letterDivs = [...document.querySelectorAll('.letter')];
 const messages = document.getElementById('messages');
-
-document.addEventListener('keyup', (event) => {
-  if (event.key === 'Enter') event.preventDefault();
-  
-  const activeElement = document.activeElement;
-  const regex = /Key\w/;
-  if (regex.test(event.code)) {
-    if (activeElement.nextElementSibling) {
-      activeElement.nextElementSibling.focus();
-    }
-  }
-
-});
+const input = document.getElementById('enter-guess');
 
 function isOnScreen(word) {
-  let lettersInWord = [...document.getElementsByClassName('enter-guess')]
-  .map(ele => ele.value);
+  let lettersInWord = input.value.split('');
   // console.log(lettersInWord)
   let lettersOnScreen = letterDivs
     .filter(div => div.textContent !== "")
@@ -58,10 +45,10 @@ function removeWord(word) {
   let remLetters = word.split('');
   
   remLetters.forEach(letter => {
-    console.log(letter);
+    // console.log(letter);
     currentLetters.splice(currentLetters.indexOf(letter.toUpperCase()), 1)
     currentLetters.push('');
-    console.log(currentLetters)
+    // console.log(currentLetters)
   })
 
   for (let i = 0; i < currentLetters.length; i++) {
@@ -70,11 +57,8 @@ function removeWord(word) {
 }
 
 function checkWord() {
-  let entryLetters = [...document.getElementsByClassName('enter-guess')]
-    .map(ele => ele.value);
-  let testWord = entryLetters.join('');
-  console.log(testWord);
-  // console.log(`Checking ${testWord}`);
+  let testWord = input.value;
+  // console.log(testWord);
   let message;
   if (!isOnScreen(testWord)) {
     message = "Not on screen!";
@@ -88,7 +72,7 @@ function checkWord() {
   setTimeout(()=>{
     messages.style.display = "none";
     if(message === "Word found!") removeWord(testWord);
-    document.getElementById('enter-guess').value = '';
+    input.value = '';
   }, 1000)
 }
 
