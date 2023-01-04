@@ -1,14 +1,39 @@
-import { WORDS } from "../../../Word Game/words.js"
+import { WORDS } from "./words.js"
 
 const letters = ["A", "A", "B", "C", "D", "E", "E", "F", "G", "H", "I", "I", "J", "K", "L", "M", "N", "O", "O", "P", "Q", "R", "S", "T", "U", "U", "V", "W", "X", "Y", "Z"];
 const letterDivs = [...document.querySelectorAll('.letter')];
 const messages = document.getElementById('messages');
 const input = document.getElementById('enter-guess');
-const submit = document.getElementById('check-word');
+const submitBtn = document.getElementById('check-word');
+const newLetterBtn = document.getElementById('new-letter');
+const scoreTracker = document.getElementById('score-tracker');
+const rowLength = 8;
+const wordScore = 6;
+
+let score = 20;
+scoreTracker.textContent = score;
+
+document.addEventListener('keydown', (event) => {
+  if (event.code.includes('Key')) input.focus();
+  if (event.code === "Space") {
+    event.preventDefault();
+    newLetterBtn.click();
+  }
+});
 
 input.addEventListener('keyup', (event) => {
-  if (event.key === "Enter") submit.click();
+  if (event.key === "Enter") submitBtn.click();
 });
+
+function modScore(n) {
+  let direction = n > 0 ? 'up' : 'down'
+  score += n;
+  scoreTracker.classList.remove('up');
+  scoreTracker.classList.remove('down');
+  void scoreTracker.offsetWidth;
+  scoreTracker.textContent = score.toString();
+  scoreTracker.classList.add(direction);
+}
 
 function isOnScreen(word) {
   let lettersInWord = input.value.split('');
@@ -37,9 +62,10 @@ function genLetter() {
 }
 
 function addLetter() {
-  for (let div of letterDivs) {
-    if (div.textContent === "") {
-      div.textContent = genLetter()
+  for (let i = 0; i < letterDivs.length; i++) {
+    if (letterDivs[i].textContent === "") {
+      letterDivs[i].textContent = genLetter()
+      modScore(-Math.ceil((i+1)/rowLength));
       break;
     }
   }
@@ -62,7 +88,7 @@ function removeWord(word) {
 }
 
 function checkWord() {
-  submit.disabled = true;
+  submitBtn.disabled = true;
   let testWord = input.value;
   // console.log(testWord);
   let message;
@@ -75,11 +101,12 @@ function checkWord() {
   }
   messages.style.display = "flex";
   messages.textContent = message;
+  if(message === "Word found!") modScore(wordScore);
   setTimeout(()=>{
     messages.style.display = "none";
     if(message === "Word found!") removeWord(testWord);
     input.value = '';
-    submit.disabled = false;
+    submitBtn.disabled = false;
   }, 1000)
 }
 

@@ -1,6 +1,7 @@
 body {
   margin: 0;
   width: 100%;
+  background-color:rgb(216, 247, 255);
 }
 
 .container {
@@ -16,7 +17,6 @@ body {
 
 .letters {
   margin-top: 10px;
-  background-color: white;
   width: 80%;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -78,4 +78,33 @@ input[type="text"] {
 button {
   height: 2rem;
   font-size: 12pt;
+}
+
+.score {
+  font-size: 42pt;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.up {
+  animation-name: scoreup;
+  animation-duration: 2.5s;
+}
+
+.down {
+  animation-name: scoredown;
+  animation-duration: 2s;
+}
+
+@keyframes scoredown {
+  0% {color: red;}
+  100% {color: black;}
+}
+
+@keyframes scoreup {
+  0% {color: green;}
+  30% {color: green;}
+  100% {color: black;}
 }
