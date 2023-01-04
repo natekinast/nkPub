@@ -4,6 +4,11 @@ const letters = ["A", "A", "B", "C", "D", "E", "E", "F", "G", "H", "I", "I", "J"
 const letterDivs = [...document.querySelectorAll('.letter')];
 const messages = document.getElementById('messages');
 const input = document.getElementById('enter-guess');
+const submit = document.getElementById('check-word');
+
+input.addEventListener('keyup', (event) => {
+  if (event.key === "Enter") submit.click();
+});
 
 function isOnScreen(word) {
   let lettersInWord = input.value.split('');
@@ -57,6 +62,7 @@ function removeWord(word) {
 }
 
 function checkWord() {
+  submit.disabled = true;
   let testWord = input.value;
   // console.log(testWord);
   let message;
@@ -73,6 +79,7 @@ function checkWord() {
     messages.style.display = "none";
     if(message === "Word found!") removeWord(testWord);
     input.value = '';
+    submit.disabled = false;
   }, 1000)
 }
 
