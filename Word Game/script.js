@@ -9,6 +9,7 @@ const newLetterBtn = document.getElementById('new-letter');
 const scoreTracker = document.getElementById('score-tracker');
 const rowLength = 8;
 const wordScore = 6;
+const one = 1;
 
 let score = 20;
 scoreTracker.textContent = score;
